@@ -1,0 +1,76 @@
+:root {
+  --pixel-size: 2px;
+  --grid-cell: calc( var(--pixel-size) * 16);
+}
+
+@media(min-width: 700px) {
+  :root {
+    --pixel-size: 3px;
+  }
+}
+
+@media(min-width: 900px) {
+  :root {
+    --pixel-size: 4px;
+  }
+}
+
+.pixel-art {
+  image-rendering: pixelated;
+}
+
+.camera {
+  width: calc(var(--pixel-size) * 160);
+  height: calc(var(--pixel-size) * 144);
+  overflow: hidden; /* change to hidden if visible */
+  background: #61ddf7;
+  position: relative;
+}
+
+.map {
+  image-rendering: pixelated;
+  background-image: url(../public/images/maps/test_map.png);
+  background-size: 100%;
+  width: calc(13 * var(--grid-cell));
+  height: calc(10 * var(--grid-cell));
+  position: relative;
+}
+
+.character {
+  width: calc(var(--grid-cell) * 2);
+  height: calc(var(--grid-cell) * 2);
+  position: absolute;
+  overflow: hidden; /* change to hidden if visible */
+}
+
+.character-spritesheet {
+  position: absolute;
+  /* animation: moveSpritesheet 1s steps(4) infinite; */
+  width: calc(var(--pixel-size) * 128);
+  height: calc(var(--pixel-size) * 128);
+}
+
+.character-shadow {
+  width: calc(var(--grid-cell) * 2);
+  height: calc(var(--grid-cell) * 2);
+  position: absolute;
+}
+
+.face-right {
+  top: calc(var(--pixel-size) * -32);
+}
+.face-up {
+  top: calc(var(--pixel-size) * -64);
+}
+.face-left {
+  top: calc(var(--pixel-size) * -96);
+}
+
+@keyframes moveSpritesheet {
+  from {
+    transform: translate3d(0px, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
