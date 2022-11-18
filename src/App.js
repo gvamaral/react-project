@@ -1,34 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useKey from './useKey';
 import './App.css';
 
 function App() {
-  const pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
+  const pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'))*16;
+  const [facingPosition, setFacingPosition] = useState('');
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
 
   function useMovement() {
-    let x = 0;
-    let y = 0;
     let speed = 1;
 
-    const moveUp = () => {
+    const moveUp = (event) => {
       console.log("Up arrow was pressed, move Up");
-      y -= speed;
-      console.log(`y=${y}`);
+      setFacingPosition('face-up');
+      setY(y-speed);
     }
     const moveRight = () => {
       console.log("Right arrow was pressed, move Right");
-      x += speed;
-      console.log(`x=${x}`);
+      setFacingPosition('face-right');
+      setX(x+speed);
     }
     const moveDown = () => {
       console.log("Down arrow was pressed, move Down");
-      y += speed;
-      console.log(`y=${y}`);
+      setFacingPosition('face-down');
+      setY(y+speed);
     }
     const moveLeft = () => {
       console.log("Left arrow was pressed, move Left");
-      x -= speed;
-      console.log(`x=${x}`);
+      setFacingPosition('face-left');
+      setX(x-speed);
     }
     useKey("ArrowUp", moveUp);
     useKey("ArrowRight", moveRight);
@@ -39,8 +40,15 @@ function App() {
   return (
     <div className='camera'>
       <div className='map pixel-art'>
-        <div className='character'>
-          <img className='character-spritesheet face-down' src='./images/sprites/pochita.png' alt='Character'></img>
+        <div
+        className='character'
+        style={{'transform': `translate3d(${x*pixelSize}px, ${y*pixelSize}px, 0)`}}
+        >
+          <img
+            className={`character-spritesheet ${facingPosition}`}
+            src='./images/sprites/pochita.png'
+            alt='Character'
+            ></img>
         </div>
       </div>
     </div>
