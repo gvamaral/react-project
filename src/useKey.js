@@ -15,7 +15,14 @@ export default function useKey(key, callback) {
           event.preventDefault();
         }
       }
+      function remove() {
+        console.log("removed");
+      }
       document.addEventListener("keydown", handle);
-      return () => document.removeEventListener("keydown", handle)
+      document.addEventListener("keyup", remove);
+      return () => {
+        document.removeEventListener("keydown", handle);
+        document.removeEventListener("keyup", remove);
+    }
     }, [key]);
   }

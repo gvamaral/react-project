@@ -15,6 +15,13 @@
   }
 }
 
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #9fa7e4;
+}
+
 .pixel-art {
   image-rendering: pixelated;
 }
@@ -22,6 +29,7 @@
 .camera {
   width: calc(var(--pixel-size) * 160);
   height: calc(var(--pixel-size) * 144);
+  border: 2px solid red;
   overflow: hidden; /* change to hidden if visible */
   background: #61ddf7;
   position: relative;
@@ -31,29 +39,31 @@
   image-rendering: pixelated;
   background-image: url(../public/images/maps/test_map.png);
   background-size: 100%;
-  width: calc(13 * var(--grid-cell));
-  height: calc(10 * var(--grid-cell));
+  width: calc(16 * var(--grid-cell));
+  height: calc(16 * var(--grid-cell));
   position: relative;
+  /* transition: .6s all; */
+  /* transition-timing-function: linear; */
 }
 
 .character {
+  top: calc(var(--pixel-size) * -7);
+  left: calc(var(--pixel-size) * -7.5);
   width: calc(var(--grid-cell) * 2);
   height: calc(var(--grid-cell) * 2);
   position: absolute;
   overflow: hidden; /* change to hidden if visible */
+  /* transition: .6s all; */
+  /* transition-timing-function: linear; */
 }
 
 .character-spritesheet {
   position: absolute;
-  /* animation: moveSpritesheet 1s steps(4) infinite; */
   width: calc(var(--pixel-size) * 128);
   height: calc(var(--pixel-size) * 128);
 }
-
-.character-shadow {
-  width: calc(var(--grid-cell) * 2);
-  height: calc(var(--grid-cell) * 2);
-  position: absolute;
+.character[walking='true'] .character-spritesheet{
+  animation: moveSpritesheet 0.6s steps(4) infinite;
 }
 
 .face-right {
