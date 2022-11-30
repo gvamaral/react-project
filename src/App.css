@@ -60,12 +60,11 @@ body{
 .character-spritesheet {
   position: absolute;
   width: calc(var(--pixel-size) * 128);
-  height: calc(var(--pixel-size) * 128);
+  height: calc(var(--pixel-size) * 192);
 }
 .character[walking='true'] .character-spritesheet{
   animation: moveSpritesheet 0.6s steps(4) infinite;
 }
-
 .face-right {
   top: calc(var(--pixel-size) * -32);
 }
@@ -74,6 +73,12 @@ body{
 }
 .face-left {
   top: calc(var(--pixel-size) * -96);
+}
+.idle-left {
+  top: calc(var(--pixel-size) * -128);
+}
+.idle-right {
+  top: calc(var(--pixel-size) * -160);
 }
 
 @keyframes moveSpritesheet {

@@ -3,6 +3,7 @@ import useMovement from './useMovement';
 import './App.css';
 
 function App() {
+
   let {x, gridCell, pixelSize, cameraLeft, y, cameraTop, facingPosition, walking} = useMovement();
 
   return (

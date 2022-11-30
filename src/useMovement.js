@@ -22,22 +22,41 @@ export default function useMovement( gridArray = null ) {
         setFacingPosition('face-up');
         setLocation(([prevX, prevY]) => prevY > 0 && movementAllowed('up', prevX, prevY) ? [prevX, prevY - speed] : [prevX, prevY]);
     };
-    const moveRight = () => {
+    let moveRight = () => {
         console.log("Right arrow was pressed, move Right");
         setFacingPosition('face-right');
         setLocation(([prevX, prevY]) => prevX < MAX_X_POSITION && movementAllowed('right', prevX, prevY) ? [prevX + speed, prevY] : [prevX, prevY]);
     }
-    const moveDown = () => {
+    let moveDown = () => {
         console.log("Down arrow was pressed, move Down");
         setFacingPosition('face-down');
         setLocation(([prevX, prevY]) => prevY < MAX_Y_POSITION && movementAllowed('down', prevX, prevY) ? [prevX, prevY + speed] : [prevX, prevY]);
     }
-    const moveLeft = () => {
+    let moveLeft = () => {
         console.log("Left arrow was pressed, move Left");
         setFacingPosition('face-left');
         setLocation(([prevX, prevY]) => prevX > 0 && movementAllowed('left', prevX, prevY) ? [prevX - speed, prevY] : [prevX, prevY]);
     }
+    function idle() {
+        let t;
+        window.onload = resetTimer;
+        window.onmousedown = resetTimer;  // catches touchscreen presses as well
+        window.ontouchstart = resetTimer; // catches touchscreen swipes as well
+        window.ontouchmove = resetTimer;  // required by some devices
+        window.onclick = resetTimer;      // catches touchpad clicks as well
+        window.onkeydown = resetTimer;
+        window.onkeyup = resetTimer;
 
+        function yourFunction() {
+            facingPosition === 'face-left' ? setFacingPosition('idle-left'):setFacingPosition('idle-right');
+            setWalking('true');
+        }
+
+        function resetTimer() {
+            clearTimeout(t);
+            t = setTimeout(yourFunction, 5000);  // time is in milliseconds
+        }
+    }
     gridArray = creatingArrayforMap(mapLength, mapWidth);
     makingMapWalls();
 
@@ -140,6 +159,7 @@ export default function useMovement( gridArray = null ) {
     const handleKeyUp = (e) => {
         setWalking('false')
     }
+    idle();
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
