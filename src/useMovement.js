@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react';
+export {
+    useMovement as useMovement,
+    moveDown as moveDown,
+    moveUp as moveUp,
+    moveRight as moveRight,
+    moveLeft as moveLeft
+}
+let moveDown;
+let moveLeft;
+let moveRight;
+let moveUp;
 
-export default function useMovement( gridArray = null ) {
+function useMovement( gridArray = null ) {
     let speed = 3;
 
     const pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
@@ -17,22 +28,22 @@ export default function useMovement( gridArray = null ) {
     const cameraLeft = pixelSize * 65;
     const cameraTop = pixelSize * 42;
 
-    let moveUp = () => {
+    moveUp = () => {
         console.log("Up arrow was pressed, move Up");
         setFacingPosition('face-up');
         setLocation(([prevX, prevY]) => prevY > 0 && movementAllowed('up', prevX, prevY) ? [prevX, prevY - speed] : [prevX, prevY]);
     };
-    let moveRight = () => {
+    moveRight = () => {
         console.log("Right arrow was pressed, move Right");
         setFacingPosition('face-right');
         setLocation(([prevX, prevY]) => prevX < MAX_X_POSITION && movementAllowed('right', prevX, prevY) ? [prevX + speed, prevY] : [prevX, prevY]);
     }
-    let moveDown = () => {
+    moveDown = () => {
         console.log("Down arrow was pressed, move Down");
         setFacingPosition('face-down');
         setLocation(([prevX, prevY]) => prevY < MAX_Y_POSITION && movementAllowed('down', prevX, prevY) ? [prevX, prevY + speed] : [prevX, prevY]);
     }
-    let moveLeft = () => {
+    moveLeft = () => {
         console.log("Left arrow was pressed, move Left");
         setFacingPosition('face-left');
         setLocation(([prevX, prevY]) => prevX > 0 && movementAllowed('left', prevX, prevY) ? [prevX - speed, prevY] : [prevX, prevY]);
@@ -40,12 +51,13 @@ export default function useMovement( gridArray = null ) {
     function idle() {
         let t;
         window.onload = resetTimer;
-        window.onmousedown = resetTimer;  // catches touchscreen presses as well
         window.ontouchstart = resetTimer; // catches touchscreen swipes as well
         window.ontouchmove = resetTimer;  // required by some devices
         window.onclick = resetTimer;      // catches touchpad clicks as well
-        window.onkeydown = resetTimer;
-        window.onkeyup = resetTimer;
+        window.addEventListener('mouseup', resetTimer, true);
+        window.addEventListener('keyup', resetTimer, true);
+        window.addEventListener('mousedown', resetTimer, true);  // catches touchscreen presses as well
+        window.addEventListener('keydown', resetTimer, true);
 
         function yourFunction() {
             facingPosition === 'face-left' ? setFacingPosition('idle-left'):setFacingPosition('idle-right');
@@ -54,11 +66,12 @@ export default function useMovement( gridArray = null ) {
 
         function resetTimer() {
             clearTimeout(t);
-            t = setTimeout(yourFunction, 5000);  // time is in milliseconds
+            t = setTimeout(yourFunction, 10000);  // time is in milliseconds
         }
     }
     gridArray = creatingArrayforMap(mapLength, mapWidth);
     makingMapWalls();
+    console.log(gridArray)
 
     // Map array 256x256
     function creatingArrayforMap(mapLength, mapWidth) {
@@ -163,9 +176,13 @@ export default function useMovement( gridArray = null ) {
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener("mousedown", handleKeyDown);
+        document.addEventListener("mouseup", handleKeyUp);
         document.addEventListener("keyup", handleKeyUp);
         return () => {
           document.removeEventListener("keydown", handleKeyDown);
+          document.addEventListener("mousedown", handleKeyDown);
+          document.addEventListener("mouseup", handleKeyUp);
           document.removeEventListener("keyup", handleKeyUp);
         }
       }, []);
