@@ -1,11 +1,38 @@
-import { useEffect, useRef, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import { useMovement, moveDown, moveLeft, moveRight, moveUp } from './useMovement';
 import { DPadLeft, DPadRight, DPadUp, DPadDown } from './dPadButtons';
+import kickBack from './audio/kick-back.mp3'
 import './App.css';
+import Settings from './Settings';
 
-function MainMap() {
+function MainMap({ onAboutClick, onHomeClick, newGame }) {
+  if (newGame) {
+    localStorage.clear()
+  }
+  else {
+    let newGame = false;
+  }
   let intervalRef = useRef(null)
   let {x, gridCell, pixelSize, cameraLeft, y, cameraTop, facingPosition, walking} = useMovement();
+  let [showModal, setShowModal] = useState(false);
+
+  let [state, setState] = useState({audio: new Audio(kickBack), isPlaying: false});
+
+  let playPause = () => {
+    let isPlaying = state.isPlaying;
+    if (isPlaying) {
+      state.audio.pause();
+    }
+    else {
+      state.audio.play();
+    }
+    setState({audio: state.audio, isPlaying: !isPlaying});
+  }
+  let stopAudio = () => state.audio.pause();
+
+  let openModal = () => {
+    setShowModal(prev => !prev);
+  }
 
   function startMove(direction) {
     if(intervalRef.current) return;
@@ -18,6 +45,7 @@ function MainMap() {
     }
   }
   return (
+  <div className='body'>
     <div className='camera'>
       <div
       className='map pixel-art'
@@ -57,7 +85,17 @@ function MainMap() {
           <DPadRight />
         </button>
       </div>
+      <div className='settings'
+      onClick={openModal} />
+      {showModal ? <div className='modal'><Settings
+      openModal={openModal}
+      onAboutClick={onAboutClick}
+      onHomeClick={onHomeClick}
+      playPause={playPause}
+      isPlaying={state.isPlaying}
+      stopAudio={stopAudio}/></div> : null}
     </div>
+  </div>
   );
 }
 

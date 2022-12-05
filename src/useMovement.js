@@ -20,13 +20,22 @@ function useMovement( gridArray = null ) {
     const MAX_Y_POSITION = (gridCell * 15)+3;
     const [facingPosition, setFacingPosition] = useState('');
 
-    let [[x, y], setLocation] = useState([0, gridCell*4]);
+    let [[x, y], setLocation] = useState(() => {
+        const saved = localStorage.getItem('coordinates');
+        const initialValue = JSON.parse(saved);
+        return initialValue || [0, gridCell*4];
+    });
     const [walking, setWalking] = useState('false');
+
 
     const mapWidth = 16;
     const mapLength = 16;
     const cameraLeft = pixelSize * 65;
     const cameraTop = pixelSize * 42;
+
+    useEffect(() => {
+        localStorage.setItem('coordinates', JSON.stringify([x, y]));
+    }, [[x, y]])
 
     moveUp = () => {
         console.log("Up arrow was pressed, move Up");
@@ -71,7 +80,6 @@ function useMovement( gridArray = null ) {
     }
     gridArray = creatingArrayforMap(mapLength, mapWidth);
     makingMapWalls();
-    console.log(gridArray)
 
     // Map array 256x256
     function creatingArrayforMap(mapLength, mapWidth) {

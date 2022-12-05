@@ -1,6 +1,25 @@
 :root {
   --pixel-size: 2px;
   --grid-cell: calc( var(--pixel-size) * 16);
+  --color-purple: #9fa7e4;
+  --color-blue: #304D6D;
+  --color-aqua: #85FFC7;
+  --color-orange: #F75C03;
+  --color-black-1: #111;
+  --color-black-2: #222;
+  --color-black-3: #444;
+  --speed-normal: 0.5s;
+  --speed-fast: 0.8s;
+}
+
+@font-face {
+  font-family: ArcadeClassic;
+  src: url(./fonts/ARCADECLASSIC.TTF);
+}
+
+@font-face {
+  font-family: DotGothic16;
+  src: url(./fonts/DotGothic16-Regular.ttf);
 }
 
 @media(min-width: 700px) {
@@ -16,10 +35,14 @@
 }
 
 body{
+  background-color: var(--color-purple);
+}
+
+.body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #9fa7e4;
+  background-color: var(--color-purple);
 }
 
 .pixel-art {
@@ -27,9 +50,10 @@ body{
 }
 
 .camera {
+  margin: 20px;
   width: calc(var(--pixel-size) * 160);
   height: calc(var(--pixel-size) * 144);
-  border: 2px solid red;
+  border: 2px solid var(--color-black-1);
   overflow: hidden; /* change to hidden if visible */
   background: #61ddf7;
   position: relative;
@@ -90,6 +114,161 @@ body{
   }
 }
 
+.settings {
+  image-rendering: pixelated;
+  position: absolute;
+  left: calc(var(--pixel-size) * 2);
+  top: calc(var(--pixel-size) * 2);
+  width: calc(var(--pixel-size) * 12);
+  height: calc(var(--pixel-size) * 12);
+  background-image: url(../public/images/icon/settings1.png);
+  background-size: calc(var(--pixel-size) * 12);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.settings:active {
+  background-image: url(../public/images/icon/settings2.png);
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.settings-screen {
+  image-rendering: pixelated;
+  display: flex;
+  font-family: ArcadeClassic;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  background-image: url(../public/images/backgrounds/modalBackground.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: calc(var(--pixel-size) * 5);
+  width: calc(var(--pixel-size) * 96);
+  height: calc(var(--pixel-size) * 80);
+}
+.title {
+  display: flex;
+}
+.title button {
+  position: absolute;
+  font-family: ArcadeClassic;
+  font-size: 40px;
+  top: calc(var(--pixel-size) * 7);
+  right: calc(var(--pixel-size) * 7);
+  background: none;
+  border: none;
+  outline: inherit;
+  cursor: pointer;
+}
+.settings-screen h1 {
+  text-transform: uppercase;
+  font-family: ArcadeClassic;
+  letter-spacing: 2px;
+}
+.setting-controllers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "Off";
+  text-align: center;
+  text-transform: uppercase;
+  font-family: ArcadeClassic;
+  font-size: 26px;
+  height: 26px;
+  width: 56px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: var(--color-orange);
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--color-orange);
+}
+input:checked + .slider:before {
+  content: "On";
+  -webkit-transform: translateX(56px);
+  -ms-transform: translateX(56px);
+  transform: translateX(56px);
+}
+.music-icon {
+  image-rendering: pixelated;
+  background-image: url(../public/images/icon/music-icon.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: calc(var(--pixel-size) * 12);
+  height: calc(var(--pixel-size) * 12);
+}
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  flex-grow: 1;
+}
+.about-button {
+  position: relative;
+  width: calc(var(--pixel-size) * 40);
+  height: calc(var(--pixel-size) * 8);
+  font-family: ArcadeClassic;
+  font-size: calc(var(--pixel-size) * 5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: transparent;
+  backdrop-filter: blur(30px);
+  color: var(--color-black-1);
+  transition: var(--speed-normal);
+  border: 2px solid var(--color-black-1);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.about-button:hover {
+  border: 1px solid transparent;
+  background: var(--color-purple) url(../public/images/sprites/pixel.png); /* 360px x 1080px */
+  transition-delay: 0.8s;
+  background-size: 180px;
+  animation: animate var(--speed-fast) steps(8) forwards;
+}
+
 .dpad {
   position:absolute;
   right: calc(var(--pixel-size) * 2);
@@ -110,8 +289,8 @@ body{
   height: calc(var(--pixel-size) * 13);
 }
 
-.dpad-button.pressed .Arrow_arrow-inset { stroke:#07c2cc; }
-.dpad-button.pressed .Arrow_arrow-body { stroke:#17dfea; }
+.dpad-button:active .Arrow_arrow-inset { stroke:#07c2cc; }
+.dpad-button:active .Arrow_arrow-body { stroke:#17dfea; }
 
 .dpad-up {
   position: absolute;
@@ -141,10 +320,14 @@ body{
 /* Start Menu */
 
 .background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   image-rendering: pixelated;
   background-image: url(../public/images/backgrounds/StartBackground.png);
   background-size: 100%;
   background-repeat: no-repeat;
+  margin: 100px;
   width: calc(200 * var(--pixel-size));
   height: calc(100 * var(--pixel-size));
 }
@@ -154,4 +337,97 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.startMenuButton {
+  position: relative;
+  width: calc(var(--pixel-size) * 60);
+  height: calc(var(--pixel-size) * 15);
+  margin: 10px;
+  line-height: calc(var(--pixel-size) * 15);
+  font-family: ArcadeClassic;
+  font-size: calc(var(--pixel-size) * 5);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  background-color: transparent;
+  backdrop-filter: blur(30px);
+  color: var(--color-black-1);
+  transition: var(--speed-normal);
+  border: 2px solid var(--color-black-1);
+  border-radius: 10px;
+}
+.startMenuButton:hover {
+  border: 1px solid transparent;
+  background: var(--color-purple) url(../public/images/sprites/pixel.png); /* 360px x 1080px */
+  transition-delay: 0.8s;
+  background-size: 180px;
+  animation: animate var(--speed-fast) steps(8) forwards;
+}
+@keyframes animate {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: -480px;
+  }
+}
+
+/* About Page */
+
+.About {
+  image-rendering: pixelated;
+}
+.pochitaWorld {
+  display: flex;
+  background-color: var(--color-blue);
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--pixel-size) * 2);
+}
+.company {
+  display: flex;
+  justify-content: flex-start;
+}
+.logo {
+  image-rendering: pixelated;
+  background-image: url(../public/images/icon/Pochita_logo.gif);
+  margin: 0 calc(var(--pixel-size) * 3);
+  transform: scaleX(-1);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: calc(var(--pixel-size) * 16);
+  height: calc(var(--pixel-size) * 16);
+}
+.gameName {
+  font-family: DotGothic16;
+  margin: 0;
+  font-size: calc(var(--pixel-size) * 10);
+  letter-spacing: 2px;
+  color: var(--color-aqua);
+}
+.pochitaWorld nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: calc(var(--pixel-size) * 10);
+  margin: 10px;
+  color: var(--color-aqua);
+}
+.pochitaWorld nav a {
+  cursor: pointer;
+  font-family: DotGothic16;
+  text-decoration: none;
+  color: var(--color-aqua);
+}
+.story {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  color: var(--color-black-1);
+}
+.story h2{
+  font-size: 40px;
 }
