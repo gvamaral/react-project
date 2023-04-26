@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/react-project/static/css/main.5dd4e402.css",
+    "main.js": "/react-project/static/js/main.c702d704.js",
+    "static/js/787.a2bf511c.chunk.js": "/react-project/static/js/787.a2bf511c.chunk.js",
+    "static/media/kick-back.mp3": "/react-project/static/media/kick-back.d42b574a0083ef8f4209.mp3",
+    "static/media/DotGothic16-Regular.ttf": "/react-project/static/media/DotGothic16-Regular.7317ef6fed091a7e2f39.ttf",
+    "static/media/StartBackground.png": "/react-project/static/media/StartBackground.632cf1241e23a4216da8.png",
+    "static/media/ARCADECLASSIC.TTF": "/react-project/static/media/ARCADECLASSIC.8f36b955d042951fd3af.TTF",
+    "static/media/pixel.png": "/react-project/static/media/pixel.4d743fdc21b38f382915.png",
+    "index.html": "/react-project/index.html",
+    "main.5dd4e402.css.map": "/react-project/static/css/main.5dd4e402.css.map",
+    "main.c702d704.js.map": "/react-project/static/js/main.c702d704.js.map",
+    "787.a2bf511c.chunk.js.map": "/react-project/static/js/787.a2bf511c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5dd4e402.css",
+    "static/js/main.c702d704.js"
+  ]
+}
